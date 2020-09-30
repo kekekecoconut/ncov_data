@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.ProvinceDataMapper">
+
+    <insert id="insertProvinceData" parameterType="com.keke.domain.ProvinceData">
+        insert into provincedata(provinceName,provinceShortName,currentConfirmedCount,confirmedCount,suspectedCount,curedCount,deadCount,comment,locationId) values(#{provinceName},#{provinceShortName},#{currentConfirmedCount},#{confirmedCount},#{suspectedCount},#{curedCount},#{deadCount},#{comment},#{locationId})
+    </insert>
+
+    <update id="updateProvinceData">
+        update provincedata
+        <trim prefix="set" suffixOverrides=",">
+            <if test="provinceShortName!=null">provinceShortName=#{provinceShortName},</if>
+            <if test="currentConfirmedCount!=null">currentConfirmedCount=#{currentConfirmedCount},</if>
+            <if test="confirmedCount!=null">confirmedCount=#{confirmedCount},</if>
+            <if test="suspectedCount!=null">suspectedCount=#{suspectedCount},</if>
+            <if test="curedCount!=null">curedCount=#{curedCount},</if>
+            <if test="deadCount!=null">deadCount=#{deadCount},</if>
+            <if test="comment!=null">comment=#{comment},</if>
+            <if test="locationId!=null">locationId=#{locationId},</if>
+        </trim>
+        where provinceName=#{provinceName}
+    </update>
+
+    <select id="selectDataByProvince" resultType="com.keke.domain.ProvinceData" parameterType="String">
+        select * from provincedata where provinceName = #{provinceName}
+    </select>
+
+    <select id="selectConfirmedDataProvince" resultType="com.keke.domain.ProvinceData">
+        select * from provincedata
+    </select>
+
+</mapper>

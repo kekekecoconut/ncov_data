@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.WorldDataMapper">
+
+    <insert id="insertToday" parameterType="com.keke.domain.WorldData">
+        insert into worlddata(date, country, countryCode, province, city, provinceCode, cityCode, suspected, cured, dead, confirmed) values(#{date},#{country},#{countryCode},#{province},#{city},#{provinceCode},#{cityCode},#{suspected},#{cured},#{dead},#{confirmed})
+    </insert>
+
+    <select id="selectToday" resultType="com.keke.domain.WorldData">
+        select * from worlddata where date=#{date}
+    </select>
+
+    <select id="selectConfirmed" resultType="String">
+        select confirmed from worlddata where country=#{country} and date=#{date} and province is null and city is null
+    </select>
+
+</mapper>

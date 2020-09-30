@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.CityDataMapper">
+
+    <insert id="insertCityData" parameterType="com.keke.domain.CityNewData">
+        insert into citynewdata(currentConfirmedCount,confirmedCount,curedCount,cityName, locationId,deadCount,suspectedCount,provinceName) values(#{currentConfirmedCount},#{confirmedCount},#{curedCount},#{cityName},#{locationId},#{deadCount},#{suspectedCount},#{provinceName})
+    </insert>
+
+    <update id="updateCityData">
+        update citynewdata
+        <trim prefix="set" suffixOverrides=",">
+            <if test="currentConfirmedCount!=null">currentConfirmedCount=#{currentConfirmedCount},</if>
+            <if test="confirmedCount!=null">confirmedCount=#{confirmedCount},</if>
+            <if test="suspectedCount!=null">suspectedCount=#{suspectedCount},</if>
+            <if test="curedCount!=null">curedCount=#{curedCount},</if>
+            <if test="deadCount!=null">deadCount=#{deadCount},</if>
+            <if test="provinceName!=null">provinceName=#{provinceName},</if>
+            <if test="locationId!=null">locationId=#{locationId},</if>
+        </trim>
+        where cityName=#{cityName}
+    </update>
+
+    <select id="selectDataByCity" resultType="com.keke.domain.CityNewData">
+        select * from citynewdata where provinceName = #{provinceName} and cityName = #{cityName}
+    </select>
+
+    <select id="selectBeijingData" resultType="com.keke.domain.CityNewData">
+        select * from citynewdata where provinceName = '北京市'
+    </select>
+
+    <select id="selectXinjiangData" resultType="com.keke.domain.CityNewData">
+        select * from citynewdata where provinceName = '新疆维吾尔自治区'
+    </select>
+
+</mapper>

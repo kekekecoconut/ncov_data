@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.CountryDataMapper">
+
+    <insert id="insertCountryData" parameterType="com.keke.domain.CountryData">
+        insert into countrydata(continents,provinceName,currentConfirmedCount,confirmedCount,suspectedCount,curedCount,deadCount,deadRate,countryFullName) values(#{continents},#{provinceName},#{currentConfirmedCount},#{confirmedCount},#{suspectedCount},#{curedCount},#{deadCount},#{deadRate},#{countryFullName})
+    </insert>
+
+    <update id="updateCountryData">
+        update countrydata
+        <trim prefix="set" suffixOverrides=",">
+            <if test="continents!=null">continents=#{continents},</if>
+            <if test="currentConfirmedCount!=null">currentConfirmedCount=#{currentConfirmedCount},</if>
+            <if test="confirmedCount!=null">confirmedCount=#{confirmedCount},</if>
+            <if test="suspectedCount!=null">suspectedCount=#{suspectedCount},</if>
+            <if test="curedCount!=null">curedCount=#{curedCount},</if>
+            <if test="deadCount!=null">deadCount=#{deadCount},</if>
+            <if test="deadRate!=null">deadRate=#{deadRate},</if>
+            <if test="countryFullName!=null">countryFullName=#{countryFullName},</if>
+        </trim>
+        where provinceName=#{provinceName}
+    </update>
+
+    <select id="selectDayCurrent" resultType="com.keke.domain.CountryDayData" parameterType="String">
+        select date,confirmed,cured,dead from worlddata where country = '中国' and province is null and city is null and date = #{date}
+    </select>
+
+
+    <select id="selectDataByCountry" resultType="com.keke.domain.CountryData" parameterType="String">
+        select * from countrydata where provinceName = #{provinceName}
+    </select>
+
+    <select id="selectAllData" resultType="com.keke.domain.CountryData">
+        select * from countrydata
+    </select>
+
+</mapper>
